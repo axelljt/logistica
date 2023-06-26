@@ -1,5 +1,6 @@
 package com.prueba.logistica.app.controllers;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.prueba.logistica.app.entities.LogisticaMaritima;
 import com.prueba.logistica.app.services.ILogisticaMaritimaService;
+import com.prueba.logistica.app.utilities.Common;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +32,8 @@ public class LogisticaMaritimaRestController {
 
 	@Autowired
 	private ILogisticaMaritimaService logisticaMservice;
+	
+	public static final double DESCUENTO_LOGISTICA_M = 0.03;
 	
 	@GetMapping("/logistica-maritima")
 	public List<LogisticaMaritima>show() {
@@ -54,6 +58,15 @@ public class LogisticaMaritimaRestController {
 		}
 		
 		try {
+			if(logisticaM.getCantida() > 10) {
+				logisticaM.setPrecioEnvio(Common.aplicarDescuento(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+				logisticaM.setPrecioNormal(logisticaM.getPrecioEnvio());
+				logisticaM.setDescuento(Common.calcularDescuentoLogisticaT(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+			}else {
+				logisticaM.setPrecioNormal(logisticaM.getPrecioEnvio());
+				logisticaM.setPrecioEnvio(logisticaM.getPrecioEnvio());
+				logisticaM.setDescuento(new BigDecimal(0.00));
+			}
 			logisticaMNew = logisticaMservice.saveLogisticaM(logisticaM);
 			} 
 		catch (DataAccessException e) {
@@ -94,11 +107,17 @@ public class LogisticaMaritimaRestController {
 		try 
 		{
 			currentLogisticaMaritima.setCantida(logisticaM.getCantida());
+			if(logisticaM.getCantida() > 10) {
+				currentLogisticaMaritima.setPrecioEnvio(Common.aplicarDescuento(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+				currentLogisticaMaritima.setPrecioNormal(logisticaM.getPrecioEnvio());
+				currentLogisticaMaritima.setDescuento(Common.calcularDescuentoLogisticaT(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+			}else {
+				currentLogisticaMaritima.setPrecioNormal(logisticaM.getPrecioEnvio());
+				currentLogisticaMaritima.setPrecioEnvio(logisticaM.getPrecioEnvio());
+				currentLogisticaMaritima.setDescuento(new BigDecimal(0.00));
+			}
 			currentLogisticaMaritima.setFechaRegistro(logisticaM.getFechaRegistro());
 			currentLogisticaMaritima.setFechaEntrega(logisticaM.getFechaEntrega());
-			currentLogisticaMaritima.setPrecioNormal(logisticaM.getPrecioNormal());
-			currentLogisticaMaritima.setDescuento(logisticaM.getDescuento());
-			currentLogisticaMaritima.setPrecioEnvio(logisticaM.getPrecioEnvio());
 			currentLogisticaMaritima.setNumeroFlota(logisticaM.getNumeroFlota());
 			currentLogisticaMaritima.setNumeroGuia(logisticaM.getNumeroGuia());
 			currentLogisticaMaritima.setCliente(logisticaM.getCliente());

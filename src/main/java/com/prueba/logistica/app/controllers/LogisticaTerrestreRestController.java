@@ -1,5 +1,6 @@
 package com.prueba.logistica.app.controllers;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.prueba.logistica.app.entities.LogisticaTerrestre;
 import com.prueba.logistica.app.services.ILogisticaTerrestreService;
+import com.prueba.logistica.app.utilities.Common;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +32,8 @@ public class LogisticaTerrestreRestController {
 
 	@Autowired
 	private ILogisticaTerrestreService logisticaTservice;
+	
+	public final double DESCUENTO_LOGISTICA_T = 0.05;
 	
 	@GetMapping("/logistica-terrestre")
 	public List<LogisticaTerrestre>show() {
@@ -54,6 +58,15 @@ public class LogisticaTerrestreRestController {
 		}
 		
 		try {
+			if(logisticaT.getCantida() > 10) {
+				logisticaT.setPrecioEnvio(Common.aplicarDescuento(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+				logisticaT.setPrecioNormal(logisticaT.getPrecioEnvio());
+				logisticaT.setDescuento(Common.calcularDescuentoLogisticaT(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+			}else {
+				logisticaT.setPrecioNormal(logisticaT.getPrecioEnvio());
+				logisticaT.setPrecioEnvio(logisticaT.getPrecioEnvio());
+				logisticaT.setDescuento(new BigDecimal(0.00));
+			}
 			logisticaTNew = logisticaTservice.saveLogisticaT(logisticaT);
 			} 
 		catch (DataAccessException e) {
@@ -94,11 +107,17 @@ public class LogisticaTerrestreRestController {
 		try 
 		{
 			currentLogisticaTerrestre.setCantida(logisticaT.getCantida());
+			if(logisticaT.getCantida() > 10) {
+				currentLogisticaTerrestre.setPrecioEnvio(Common.aplicarDescuento(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+				currentLogisticaTerrestre.setPrecioNormal(logisticaT.getPrecioEnvio());
+				currentLogisticaTerrestre.setDescuento(Common.calcularDescuentoLogisticaT(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+			}else {
+				currentLogisticaTerrestre.setPrecioNormal(logisticaT.getPrecioEnvio());
+				currentLogisticaTerrestre.setPrecioEnvio(logisticaT.getPrecioEnvio());
+				currentLogisticaTerrestre.setDescuento(new BigDecimal(0.00));
+			}
 			currentLogisticaTerrestre.setFechaRegistro(logisticaT.getFechaRegistro());
 			currentLogisticaTerrestre.setFechaEntrega(logisticaT.getFechaEntrega());
-			currentLogisticaTerrestre.setPrecioNormal(logisticaT.getPrecioNormal());
-			currentLogisticaTerrestre.setDescuento(logisticaT.getDescuento());
-			currentLogisticaTerrestre.setPrecioEnvio(logisticaT.getPrecioEnvio());
 			currentLogisticaTerrestre.setPlacaVehiculo(logisticaT.getPlacaVehiculo());
 			currentLogisticaTerrestre.setNumeroGuia(logisticaT.getNumeroGuia());
 			currentLogisticaTerrestre.setCliente(logisticaT.getCliente());
@@ -144,4 +163,7 @@ public class LogisticaTerrestreRestController {
 		response.put("mensaje", "Logistica terrestre eliminada con éxito!");
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
+	
+	
+	
 }
