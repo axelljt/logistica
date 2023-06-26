@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name="logistica_terrestre")
+@Table(name="logistica_maritima")
 @Data
 @NoArgsConstructor
 public class LogisticaMaritima implements Serializable {
@@ -82,7 +82,7 @@ public class LogisticaMaritima implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_bodega")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private Bodega bodega;
+	private Puerto puerto;
 	
 	private static final long serialVersionUID = 1L;
 
