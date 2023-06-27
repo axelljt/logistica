@@ -58,10 +58,11 @@ public class LogisticaTerrestreRestController {
 		}
 		
 		try {
-			if(logisticaT.getCantida() > 10) {
-				logisticaT.setPrecioEnvio(Common.aplicarDescuento(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
-				logisticaT.setPrecioNormal(logisticaT.getPrecioEnvio());
-				logisticaT.setDescuento(Common.calcularDescuentoLogisticaT(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+			if(logisticaT.getCantidad() > 10) {
+				BigDecimal precioNormal = logisticaT.getPrecioEnvio();
+				logisticaT.setPrecioNormal(precioNormal);
+				logisticaT.setPrecioEnvio(Common.aplicarDescuento(precioNormal,DESCUENTO_LOGISTICA_T));
+				logisticaT.setDescuento(Common.calcularDescuentoLogisticaT(precioNormal,DESCUENTO_LOGISTICA_T));
 			}else {
 				logisticaT.setPrecioNormal(logisticaT.getPrecioEnvio());
 				logisticaT.setPrecioEnvio(logisticaT.getPrecioEnvio());
@@ -70,7 +71,7 @@ public class LogisticaTerrestreRestController {
 			logisticaTNew = logisticaTservice.saveLogisticaT(logisticaT);
 			} 
 		catch (DataAccessException e) {
-			response.put("mensaje","Error al guardar el cliente en la base de datos");
+			response.put("mensaje","Error al guardar Logistica terrestre en la base de datos");
 			response.put("error",e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -106,11 +107,12 @@ public class LogisticaTerrestreRestController {
 		
 		try 
 		{
-			currentLogisticaTerrestre.setCantida(logisticaT.getCantida());
-			if(logisticaT.getCantida() > 10) {
-				currentLogisticaTerrestre.setPrecioEnvio(Common.aplicarDescuento(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
-				currentLogisticaTerrestre.setPrecioNormal(logisticaT.getPrecioEnvio());
-				currentLogisticaTerrestre.setDescuento(Common.calcularDescuentoLogisticaT(logisticaT.getPrecioEnvio(),DESCUENTO_LOGISTICA_T));
+			currentLogisticaTerrestre.setCantidad(logisticaT.getCantidad());
+			if(logisticaT.getCantidad() > 10) {
+				BigDecimal precioNormal = logisticaT.getPrecioEnvio();
+				currentLogisticaTerrestre.setPrecioNormal(precioNormal);
+				currentLogisticaTerrestre.setPrecioEnvio(Common.aplicarDescuento(precioNormal,DESCUENTO_LOGISTICA_T));
+				currentLogisticaTerrestre.setDescuento(Common.calcularDescuentoLogisticaT(precioNormal,DESCUENTO_LOGISTICA_T));
 			}else {
 				currentLogisticaTerrestre.setPrecioNormal(logisticaT.getPrecioEnvio());
 				currentLogisticaTerrestre.setPrecioEnvio(logisticaT.getPrecioEnvio());

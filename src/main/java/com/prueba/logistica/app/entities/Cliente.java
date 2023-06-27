@@ -24,7 +24,6 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_cliente;
 	private String nombre;
-	private String apellido;
 	private String direccion;
 	private String email;
 	private String telefono;

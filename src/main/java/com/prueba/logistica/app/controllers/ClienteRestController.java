@@ -118,7 +118,6 @@ public class ClienteRestController {
 		try 
 		{
 			currentCliente.setNombre(cliente.getNombre());
-			currentCliente.setApellido(cliente.getApellido());
 			currentCliente.setEmail(cliente.getEmail());
 			currentCliente.setTelefono(cliente.getTelefono());
 			updatedCliente = clienteService.saveCliente(currentCliente);

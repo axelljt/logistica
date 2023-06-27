@@ -12,13 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
@@ -37,7 +36,7 @@ public class LogisticaMaritima implements Serializable {
 	@Column(name="id_logistica_m")
 	private Long idLogisticaM;
 	
-	private Integer cantida;
+	private Integer cantidad;
 	
 	@NotEmpty(message ="no puede estar vacio")
 	@Temporal(TemporalType.DATE)
@@ -58,12 +57,10 @@ public class LogisticaMaritima implements Serializable {
 	@Column(name="valor_descuento")
 	private BigDecimal descuento;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "LLL####L")
 	@Column(name="numero_flota")
 	private String numeroFlota;
 	
-	@Size(max = 10, message = "Numero único alfanumérico de 10 dígitos")
-	@Column(name="numero_guia",unique = true)
+	@Column(name="numero_guia",unique = true,length = 10)
 	private String numeroGuia;
 	
 	@NotNull()
@@ -85,5 +82,12 @@ public class LogisticaMaritima implements Serializable {
 	private Puerto puerto;
 	
 	private static final long serialVersionUID = 1L;
+	
+	@PrePersist
+    private void validarPlacaVehiculo() {
+        if (numeroFlota == null || !numeroFlota.matches("^[A-Za-z]{3}\\d{4}[A-Za-z]$")) {
+            throw new IllegalArgumentException("El formato del numero de flota es incorrecto");
+       }
+    }
 
 }

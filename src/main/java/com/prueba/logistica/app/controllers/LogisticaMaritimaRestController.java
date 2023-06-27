@@ -58,10 +58,11 @@ public class LogisticaMaritimaRestController {
 		}
 		
 		try {
-			if(logisticaM.getCantida() > 10) {
-				logisticaM.setPrecioEnvio(Common.aplicarDescuento(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
-				logisticaM.setPrecioNormal(logisticaM.getPrecioEnvio());
-				logisticaM.setDescuento(Common.calcularDescuentoLogisticaT(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+			if(logisticaM.getCantidad() > 10) {
+				BigDecimal precioNormal = logisticaM.getPrecioEnvio();
+				logisticaM.setPrecioNormal(precioNormal);
+				logisticaM.setPrecioEnvio(Common.aplicarDescuento(precioNormal,DESCUENTO_LOGISTICA_M));
+				logisticaM.setDescuento(Common.calcularDescuentoLogisticaT(precioNormal,DESCUENTO_LOGISTICA_M));
 			}else {
 				logisticaM.setPrecioNormal(logisticaM.getPrecioEnvio());
 				logisticaM.setPrecioEnvio(logisticaM.getPrecioEnvio());
@@ -70,7 +71,7 @@ public class LogisticaMaritimaRestController {
 			logisticaMNew = logisticaMservice.saveLogisticaM(logisticaM);
 			} 
 		catch (DataAccessException e) {
-			response.put("mensaje","Error al guardar el cliente en la base de datos");
+			response.put("mensaje","Error al guardar Logistica maritima en la base de datos");
 			response.put("error",e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -106,11 +107,12 @@ public class LogisticaMaritimaRestController {
 		
 		try 
 		{
-			currentLogisticaMaritima.setCantida(logisticaM.getCantida());
-			if(logisticaM.getCantida() > 10) {
-				currentLogisticaMaritima.setPrecioEnvio(Common.aplicarDescuento(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
-				currentLogisticaMaritima.setPrecioNormal(logisticaM.getPrecioEnvio());
-				currentLogisticaMaritima.setDescuento(Common.calcularDescuentoLogisticaT(logisticaM.getPrecioEnvio(),DESCUENTO_LOGISTICA_M));
+			currentLogisticaMaritima.setCantidad(logisticaM.getCantidad());
+			if(logisticaM.getCantidad() > 10) {
+				BigDecimal precioNormal = logisticaM.getPrecioEnvio();
+				currentLogisticaMaritima.setPrecioNormal(precioNormal);
+				currentLogisticaMaritima.setPrecioEnvio(Common.aplicarDescuento(precioNormal,DESCUENTO_LOGISTICA_M));
+				currentLogisticaMaritima.setDescuento(Common.calcularDescuentoLogisticaT(precioNormal,DESCUENTO_LOGISTICA_M));
 			}else {
 				currentLogisticaMaritima.setPrecioNormal(logisticaM.getPrecioEnvio());
 				currentLogisticaMaritima.setPrecioEnvio(logisticaM.getPrecioEnvio());
@@ -138,7 +140,7 @@ public class LogisticaMaritimaRestController {
 	
 /*Metodo para eliminar cliente*/
 	
-	@DeleteMapping("/logistica-terrestre/{id}")
+	@DeleteMapping("/logistica-maritima/{id}")
 	public ResponseEntity<?> deleteLogisticaT(@PathVariable Long id){
 		
 		Map<String,Object> response = new HashMap<>();
