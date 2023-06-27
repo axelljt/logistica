@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class ClienteRestController {
 
 	/*Metodo para obtener un cliente*/
 	
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/clientes/{id}")
 	public ResponseEntity<?> getCliente(@PathVariable Long id) {
 		
@@ -62,6 +64,8 @@ public class ClienteRestController {
 	}
 	
 	/*Metodo para guardar cliente*/
+	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/clientes")
 	public ResponseEntity<?> saveCliente(@Valid @RequestBody Cliente cliente,BindingResult result){
 		
@@ -93,6 +97,7 @@ public class ClienteRestController {
 
 	/*Metodo para actualizar cliente*/
 	
+	@Secured("ROLE_ADMIN")
 	@PutMapping("/clientes/{id}")
 	public ResponseEntity<?> updateCliente(@Valid @RequestBody Cliente cliente,@PathVariable Long id,BindingResult result){
 	
@@ -135,6 +140,7 @@ public class ClienteRestController {
 
 	/*Metodo para eliminar cliente*/
 	
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<?> deleteCliente(@PathVariable Long id){
 		

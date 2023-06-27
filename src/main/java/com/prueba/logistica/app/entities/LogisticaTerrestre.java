@@ -17,9 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,12 +38,12 @@ public class LogisticaTerrestre implements Serializable {
 	
 	private Integer cantidad;
 	
-	@NotEmpty(message ="no puede estar vacio")
+	@NotNull(message ="no puede estar vacio")
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_registro")
 	private Date fechaRegistro;
 	
-	@NotEmpty(message ="no puede estar vacio")
+	@NotNull(message ="no puede estar vacio")
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_entrega")
 	private Date fechaEntrega;
