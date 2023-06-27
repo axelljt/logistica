@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class LogisticaTerrestreRestController {
 	
 	/*Metodo para guardar logistica-terrestre*/
 	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/logistica-terrestre")
 	public ResponseEntity<?> saveLogisticaT(@Valid @RequestBody LogisticaTerrestre logisticaT,BindingResult result){
 		
@@ -83,6 +85,7 @@ public class LogisticaTerrestreRestController {
 	
 /*Metodo para actualizar cliente*/
 	
+	@Secured("ROLE_ADMIN")
 	@PutMapping("/logistica-terrestre/{id}")
 	public ResponseEntity<?> updateLogisticaT(@Valid @RequestBody LogisticaTerrestre logisticaT,@PathVariable Long id,BindingResult result){
 	
@@ -140,6 +143,7 @@ public class LogisticaTerrestreRestController {
 	
 /*Metodo para eliminar cliente*/
 	
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/logistica-terrestre/{id}")
 	public ResponseEntity<?> deleteLogisticaT(@PathVariable Long id){
 		

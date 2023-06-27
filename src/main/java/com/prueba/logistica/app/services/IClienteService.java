@@ -7,7 +7,6 @@ import com.prueba.logistica.app.entities.Cliente;
 public interface IClienteService {
 
 	public List<Cliente> findAllClientes();
-	public List<Cliente> findClienteByNombre(String term);
 	public Cliente findClienteById(Long id);
 	public Cliente saveCliente(Cliente cliente);
 	public void deleteCliente(Cliente cliente);

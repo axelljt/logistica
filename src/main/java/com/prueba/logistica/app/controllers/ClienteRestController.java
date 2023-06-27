@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prueba.logistica.app.entities.Cliente;
@@ -167,12 +166,4 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
 	
-	/* Metodo que filtra los clientes por nombre*/
-	@GetMapping("/clientes/filtrar-nombres/{term}")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Cliente> filtrarClientes(@PathVariable String term){
-		return clienteService.findClienteByNombre(term);
-	}
-
-
 }

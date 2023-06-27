@@ -38,12 +38,5 @@ public class IClienteServiceImpl implements IClienteService {
 	public void deleteCliente(Cliente cliente) {
 		clienteRepository.delete(cliente);
 	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<Cliente> findClienteByNombre(String term) {
-		return clienteRepository.findByNombreContainingIgnoreCase(term);
-	}
-
 
 }

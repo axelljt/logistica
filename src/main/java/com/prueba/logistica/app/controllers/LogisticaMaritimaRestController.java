@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class LogisticaMaritimaRestController {
 	
 	/*Metodo para guardar logistica-maritima*/
 	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/logistica-maritima")
 	public ResponseEntity<?> saveLogisticaT(@Valid @RequestBody LogisticaMaritima logisticaM,BindingResult result){
 		
@@ -83,6 +85,7 @@ public class LogisticaMaritimaRestController {
 	
 /*Metodo para actualizar logistica-maritima*/
 	
+	@Secured("ROLE_ADMIN")
 	@PutMapping("/logistica-maritima/{id}")
 	public ResponseEntity<?> updateLogisticaM(@Valid @RequestBody LogisticaMaritima logisticaM,@PathVariable Long id,BindingResult result){
 	
@@ -140,6 +143,7 @@ public class LogisticaMaritimaRestController {
 	
 /*Metodo para eliminar cliente*/
 	
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/logistica-maritima/{id}")
 	public ResponseEntity<?> deleteLogisticaT(@PathVariable Long id){
 		
