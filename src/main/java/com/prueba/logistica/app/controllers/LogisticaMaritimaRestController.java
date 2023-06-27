@@ -41,6 +41,33 @@ public class LogisticaMaritimaRestController {
 		return logisticaMservice.findAllLogisticaM();
 	}
 	
+	
+/*Metodo para obtener una Logistica Maritima*/
+	
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@GetMapping("/logistica-maritima/{id}")
+	public ResponseEntity<?> getLogisticaMaritima(@PathVariable Long id) {
+		
+		LogisticaMaritima logisticaMaritima = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			logisticaMaritima = logisticaMservice.findLogisticaMById(id);
+		} catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(logisticaMaritima == null) {
+			response.put("mensaje", "Logistica maritima con  ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<LogisticaMaritima>(logisticaMaritima, HttpStatus.OK);
+	}
+	
+	
 	/*Metodo para guardar logistica-maritima*/
 	
 	@Secured("ROLE_ADMIN")

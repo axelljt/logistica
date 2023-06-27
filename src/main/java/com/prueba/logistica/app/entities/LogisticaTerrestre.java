@@ -47,6 +47,7 @@ public class LogisticaTerrestre implements Serializable {
 	@Column(name="fecha_entrega")
 	private Date fechaEntrega;
 	
+	@NotNull(message ="precio de envio no puede estar vacio")
 	@Column(name="precio_envio")
 	private BigDecimal precioEnvio;
 	
@@ -56,6 +57,7 @@ public class LogisticaTerrestre implements Serializable {
 	@Column(name="valor_descuento")
 	private BigDecimal descuento;
 	
+	@NotNull(message ="placa del vehiculo no puede estar vacio")
 	@Column(name="placa_vehiculo")
 	private String placaVehiculo;
 	

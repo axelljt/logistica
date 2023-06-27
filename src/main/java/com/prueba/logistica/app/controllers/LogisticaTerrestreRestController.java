@@ -41,6 +41,31 @@ public class LogisticaTerrestreRestController {
 		return logisticaTservice.findAllLogisticaT();
 	}
 	
+	/*Metodo para obtener una Logistica Terrestre*/
+	
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@GetMapping("/logistica-terrestre/{id}")
+	public ResponseEntity<?> getLogisticaTerrestre(@PathVariable Long id) {
+		
+		LogisticaTerrestre logisticaTerrestre = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			logisticaTerrestre = logisticaTservice.findLogisticaTById(id);
+		} catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(logisticaTerrestre == null) {
+			response.put("mensaje", "Logistica terrestre con  ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<LogisticaTerrestre>(logisticaTerrestre, HttpStatus.OK);
+	}
+	
 	/*Metodo para guardar logistica-terrestre*/
 	
 	@Secured("ROLE_ADMIN")
