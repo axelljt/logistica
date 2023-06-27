@@ -21,8 +21,8 @@ INSERT INTO puertos (nombre_puerto,ubicacion) VALUES('Puerto cutuco','La UNION, 
 
 /* Creamos algunos usuarios con sus roles */
 
-INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('andres','$2a$12$n7ORAc9w.FbjBSRQ72Bd2ep8xVsmUOYa9GhxoUMCAgCxVML.WpxZe',1, 'Andres', 'Guzman','profesor@bolsadeideas.com');
-INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('admin','$2a$12$/vKf48k/5OPfzoNh9pJ9dO5c6Or9BMRgMWtKsQNn4YGmfP6bWKhSW',1, 'John', 'Doe','jhon.doe@bolsadeideas.com');
+INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('andres','$2a$12$n7ORAc9w.FbjBSRQ72Bd2ep8xVsmUOYa9GhxoUMCAgCxVML.WpxZe',true, 'Andres', 'Guzman','profesor@bolsadeideas.com');
+INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('admin','$2a$12$/vKf48k/5OPfzoNh9pJ9dO5c6Or9BMRgMWtKsQNn4YGmfP6bWKhSW',true, 'John', 'Doe','jhon.doe@bolsadeideas.com');
 
 INSERT INTO roles (nombre) VALUES ('ROLE_USER');
 INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
