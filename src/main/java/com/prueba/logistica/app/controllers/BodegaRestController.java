@@ -32,13 +32,30 @@ public class BodegaRestController {
 	@Autowired
 	private IBodegaService bodegaService;
 	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de bodegas almacenadas en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	@GetMapping("/bodegas")
 	public List<Bodega>show() {
 		return bodegaService.findAllBodegas();
 	}
 
-	/*Metodo para obtener un Bodega*/
-	
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de una bodega en la base de datos mediante el id de la bodega recibido en la peticion
+	 * 			   y devuelve un objeto ResponseEntity con el objeto bodega resultado de la busqueda realizada.}
+	 * @param {id} identificador de la bodega.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/bodegas/{id}")
 	public ResponseEntity<?> getBodega(@PathVariable Long id) {
@@ -62,8 +79,20 @@ public class BodegaRestController {
 		return new ResponseEntity<Bodega>(bodega, HttpStatus.OK);
 	}
 	
-	/*Metodo para guardar Bodega*/
-	
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda una bodega en la base de datos posterios a la validacion de todos los atributos de la bodega.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param bodega objeto bodega enviado en la petición http.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto bodega.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/Bodegas")
 	public ResponseEntity<?> saveBodega(@Valid @RequestBody Bodega bodega,BindingResult result){
@@ -94,7 +123,22 @@ public class BodegaRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para actualizar Bodega*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un objeto bodega y su identificador para actualiza los datos de una bodega 
+	 * 	en la base de datos posterios a la validacion de todos los atributos del obejto bodega.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param bodega objeto tipo bodaga enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico de la bodega.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto bodega.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/Bodegas/{id}")
@@ -136,7 +180,17 @@ public class BodegaRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para eliminar Bodega*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina una bodega de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico de la bodega.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/Bodegas/{id}")

@@ -36,17 +36,37 @@ public class LogisticaMaritimaRestController {
 	
 	public static final double DESCUENTO_LOGISTICA_M = 0.03;
 	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de logistica-maritimas almacenadas en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	@GetMapping("/logistica-maritima")
 	public List<LogisticaMaritima>show() {
 		return logisticaMservice.findAllLogisticaM();
 	}
 	
 	
-/*Metodo para obtener una Logistica Maritima*/
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de un objeto logistica maritima en la base de datos mediante el id del 
+	 * 			    objeto logistica maritima recibido en la peticion y devuelve un objeto ResponseEntity con el objeto 
+	 * 				logistica maritima resultado de la busqueda realizada.}
+	 *
+	 * @param {id} identificador de la bodega.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/logistica-maritima/{id}")
-	public ResponseEntity<?> getLogisticaMaritima(@PathVariable Long id) {
+	public ResponseEntity<?> getLogisticaM(@PathVariable Long id) {
 		
 		LogisticaMaritima logisticaMaritima = null;
 		Map<String, Object> response = new HashMap<>();
@@ -68,11 +88,25 @@ public class LogisticaMaritimaRestController {
 	}
 	
 	
-	/*Metodo para guardar logistica-maritima*/
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda un objeto de tipo logistica maritima en la base de datos posterios a la validacion de todos 
+	 * los atributos del objeto logistica maritima.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param logisticaM objeto tipo logistica maritima enviado en la petición http con los datos a modificar.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto logistica maritima.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/logistica-maritima")
-	public ResponseEntity<?> saveLogisticaT(@Valid @RequestBody LogisticaMaritima logisticaM,BindingResult result){
+	public ResponseEntity<?> saveLogisticaM(@Valid @RequestBody LogisticaMaritima logisticaM,BindingResult result){
 		
 		LogisticaMaritima logisticaMNew = null;
 		Map<String,Object> response = new HashMap<>();
@@ -110,7 +144,22 @@ public class LogisticaMaritimaRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 	
-/*Metodo para actualizar logistica-maritima*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un objeto logistica maritima y su identificador para actualiza los datos del objeto
+	 *  logistica maritima en la base de datos posterios a la validacion de todos los atributos del objeto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param logisticaM objeto tipo logistica maritima enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico del obejto logistica maritima.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto logistica maritima.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/logistica-maritima/{id}")
@@ -168,7 +217,17 @@ public class LogisticaMaritimaRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 	
-/*Metodo para eliminar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina un objeto logistica maritima de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico del objeto logistica maritima.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/logistica-maritima/{id}")

@@ -32,12 +32,31 @@ public class ProductoRestController {
 	@Autowired
 	private IProductoService productoService;
 	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de productos almacenadas en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
+	
 	@GetMapping("/productos")
 	public List<Producto>show() {
 		return productoService.findAllProductos();
 	}
 
-	/*Metodo para obtener un Producto*/
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de un producto en la base de datos mediante el id del producto recibido en la peticion
+	 * 			   y devuelve un objeto ResponseEntity con el objeto producto resultado de la busqueda realizada.}
+	 * @param {id} identificador del producto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/productos/{id}")
@@ -62,11 +81,24 @@ public class ProductoRestController {
 		return new ResponseEntity<Producto>(Producto, HttpStatus.OK);
 	}
 	
-	/*Metodo para guardar Producto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda un producto en la base de datos posterior a la validacion de todos los atributos del producto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param producto objeto producto enviado en la petición http.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto producto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/productos")
-	public ResponseEntity<?> saveProducto(@Valid @RequestBody Producto Producto,BindingResult result){
+	public ResponseEntity<?> saveProducto(@Valid @RequestBody Producto producto,BindingResult result){
 		
 		Producto ProductoNew = null;
 		Map<String,Object> response = new HashMap<>();
@@ -81,7 +113,7 @@ public class ProductoRestController {
 		}
 		
 		try {
-			  ProductoNew = productoService.saveProducto(Producto);
+			  ProductoNew = productoService.saveProducto(producto);
 			} 
 		catch (DataAccessException e) {
 			response.put("mensaje","Error al guardar el Producto en la base de datos");
@@ -94,11 +126,26 @@ public class ProductoRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para actualizar Producto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un objeto producto y su identificador para actualiza los datos de un producto 
+	 * 	en la base de datos posterios a la validacion de todos los atributos del objeto producto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param producto objeto tipo producto enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico de la producto.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto producto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/Productos/{id}")
-	public ResponseEntity<?> updateProducto(@Valid @RequestBody Producto Producto,@PathVariable Long id,BindingResult result){
+	public ResponseEntity<?> updateProducto(@Valid @RequestBody Producto producto,@PathVariable Long id,BindingResult result){
 	
 		Producto currentProducto = productoService.findProductoById(id);
 		Producto updatedProducto = null;
@@ -121,8 +168,8 @@ public class ProductoRestController {
 		
 		try 
 		{
-			currentProducto.setNombre_producto(Producto.getNombre_producto());
-			currentProducto.setDescripcion(Producto.getDescripcion());
+			currentProducto.setNombre_producto(producto.getNombre_producto());
+			currentProducto.setDescripcion(producto.getDescripcion());
 			updatedProducto = productoService.saveProducto(currentProducto);
 		} 
 		catch (DataAccessException e) {
@@ -136,7 +183,17 @@ public class ProductoRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para eliminar Producto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina un producto de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico del producto.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/Productos/{id}")

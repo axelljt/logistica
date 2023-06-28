@@ -32,13 +32,32 @@ public class ClienteRestController {
 	@Autowired
 	private IClienteService clienteService;
 	
+	
+	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de clientes almacenados en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	@GetMapping("/clientes")
 	public List<Cliente>show() {
 		return clienteService.findAllClientes();
 	}
 
-	/*Metodo para obtener un cliente*/
-	
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de un cliente en la base de datos mediante el id del cliente y devuelve
+	 *  un objeto ResponseEntity con el objeto cliente resultado de la busqueda realizada.}
+	 * @param {id} identificador del cliente.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/clientes/{id}")
 	public ResponseEntity<?> getCliente(@PathVariable Long id) {
@@ -62,7 +81,20 @@ public class ClienteRestController {
 		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 	
-	/*Metodo para guardar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda un cliente en la base de datos posterios a la validacion de todos los atributos del cliente.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param cliente objeto cliente enviado en la petición http.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto cliente.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/clientes")
@@ -94,7 +126,22 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para actualizar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un cliente y su identificador para actualiza los datos de un cliente 
+	 * 	en la base de datos posterios a la validacion de todos los atributos del cliente.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param cliente objeto tipo cliente enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico del cliente.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto cliente.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/clientes/{id}")
@@ -137,7 +184,17 @@ public class ClienteRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para eliminar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina un cliente de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico del cliente.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/clientes/{id}")

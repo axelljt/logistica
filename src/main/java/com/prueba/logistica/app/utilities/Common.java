@@ -5,16 +5,33 @@ import java.math.RoundingMode;
 
 public class Common {
 	
-	/*Metodo para calcular el descuento al monto de envio si la cantidad > 10*/
-	
+	/**
+	 * 
+	 * {@Resumen - metodo que calcula el cantidad a descontar al precio de envío.}
+	 * @param precioEnvio monto total de los productos enviados.
+	 * @param montoDescuento valor porcentual de descuento dependiendo el tipo de logistica .
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	public static BigDecimal calcularDescuentoLogisticaT(BigDecimal precioEnvio,double montoDescuento) {
 		BigDecimal descuento = new BigDecimal(montoDescuento);
 		return (precioEnvio.multiply(descuento)).setScale(2,RoundingMode.HALF_UP) ;
 		
 	}
 	
-	/*Metodo para aplicar el descuento al monto enviado*/
-	
+	/**
+	 * 
+	 * {@Resumen - metodo que aplica el descuento al precio de envio y devuelve un Bigdecimal.}
+	 * 
+	 * @param precioEnvio monto total de los productos enviados.
+	 * @param montoDescuento valor porcentual de descuento dependiendo el tipo de logistica .
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	public static BigDecimal aplicarDescuento(BigDecimal precioEnvio,double montoDescuento) {
 		return precioEnvio.subtract(calcularDescuentoLogisticaT(precioEnvio,montoDescuento)).setScale(2,RoundingMode.HALF_UP);
 	}

@@ -32,12 +32,30 @@ public class PuertoRestController {
 	@Autowired
 	private IPuertoService puertoService;
 	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de puertos almacenadas en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	@GetMapping("/puertos")
 	public List<Puerto>show() {
 		return puertoService.findAllPuertos();
 	}
 
-	/*Metodo para obtener un Puerto*/
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de un puerto en la base de datos mediante el id del puerto recibido en la peticion
+	 * 			   y devuelve un objeto ResponseEntity con el objeto puerto resultado de la busqueda realizada.}
+	 * @param {id} identificador del puerto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/puertos/{id}")
@@ -62,7 +80,20 @@ public class PuertoRestController {
 		return new ResponseEntity<Puerto>(Puerto, HttpStatus.OK);
 	}
 	
-	/*Metodo para guardar Puerto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda un puerto en la base de datos posterior a la validacion de todos los atributos del puerto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param puerto objeto puerto enviado en la petición http.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto puerto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/Puertos")
@@ -94,7 +125,22 @@ public class PuertoRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para actualizar Puerto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un objeto puerto y su identificador para actualiza los datos de una puerto 
+	 * 	en la base de datos posterios a la validacion de todos los atributos del objeto puerto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param puerto objeto tipo puerto enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico de la puerto.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto puerto.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/Puertos/{id}")
@@ -136,7 +182,17 @@ public class PuertoRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 
-	/*Metodo para eliminar Puerto*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina una puerto de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico del puerto.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/Puertos/{id}")

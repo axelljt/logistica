@@ -36,12 +36,32 @@ public class LogisticaTerrestreRestController {
 	
 	public final double DESCUENTO_LOGISTICA_T = 0.05;
 	
+	/**
+	 * {@Resumen -metodo que devuelve la lista de logistica-terrestre almacenadas en la base de datos.}
+	 * 
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	 */
 	@GetMapping("/logistica-terrestre")
 	public List<LogisticaTerrestre>show() {
 		return logisticaTservice.findAllLogisticaT();
 	}
 	
-	/*Metodo para obtener una Logistica Terrestre*/
+	/**
+	 * 
+	 * {@Resumen - metodo realiza la busqueda de un objeto logistica terrestre en la base de datos mediante el id del 
+	 * 			    objeto logistica terrestre recibido en la peticion y devuelve un objeto ResponseEntity con el objeto 
+	 * 				logistica terrestre resultado de la busqueda realizada.}
+	 *
+	 * @param {id} identificador del objeto logistica terrestre.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/logistica-terrestre/{id}")
@@ -66,7 +86,21 @@ public class LogisticaTerrestreRestController {
 		return new ResponseEntity<LogisticaTerrestre>(logisticaTerrestre, HttpStatus.OK);
 	}
 	
-	/*Metodo para guardar logistica-terrestre*/
+	/**
+	 * 
+	 * {@Resumen - metodo que guarda un objeto de tipo logistica terrestre en la base de datos posterios a la validacion de todos 
+	 * los atributos del objeto logistica terrestre.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param logisticaT objeto tipo logistica terrestre enviado en la petición http con los datos a modificar.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto logistica terrestre.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/logistica-terrestre")
@@ -108,7 +142,22 @@ public class LogisticaTerrestreRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 	
-/*Metodo para actualizar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que recibe un objeto logistica terrestre y su identificador para actualiza los datos del objeto
+	 *  logistica terrestre en la base de datos posterios a la validacion de todos los atributos del objeto.}
+	 *
+	 * @param Valid restriccion que valida las reglas de negocio definidas en cada uno de los campos del objeto.
+	 * @param logisticaT objeto tipo logistica terrestre enviado en la petición http con los datos a modificar.
+	 * @param id identificador unico del obejto logistica terrestre.
+	 * @param result objeto que sirve para realizar la verificacion de todos los atributos del objeto logistica terrestre.
+	 * 
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/logistica-terrestre/{id}")
@@ -166,7 +215,17 @@ public class LogisticaTerrestreRestController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 	}
 	
-/*Metodo para eliminar cliente*/
+	/**
+	 * 
+	 * {@Resumen - metodo que elimina un objeto logistica terrestre de la base de datos mediante su identificador enviado en la peticion.}
+	 *
+	 * @param id identificador unico del objeto logistica terrestre.
+	 * @throws DataAccessException
+	 *  
+	 * @author axell.tejada
+	 * @version 1.0
+	 * @since 2023-06-26
+	*/
 	
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/logistica-terrestre/{id}")
