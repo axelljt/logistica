@@ -21,6 +21,6 @@ nombre : Axell José Tejada Calderón.
 * /api/logistica-terrestre: catálogo de tipo de logistica transporte terrestre.
 * /api/logistica-maritima: catálogo de tipo de logistica transporte maritimo.
 
-Nota: para realizar las operaciones de gestion POST,PUT,DELETE es necesario contar con ROLE_ADMIN y para las operaciones tipo GET es necesario el ROLE_USER o ROLE_ADMIN
+#### Nota: para realizar las operaciones de gestion POST,PUT,DELETE es necesario contar con ROLE_ADMIN y para las operaciones tipo GET es necesario el ROLE_USER o ROLE_ADMIN
 
 ####(Diagrama E-R)
