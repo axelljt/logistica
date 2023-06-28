@@ -4,12 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### heroku ###
-target/
-.settings/
-.mvn/
-
-
 ### STS ###
 .apt_generated
 .classpath
